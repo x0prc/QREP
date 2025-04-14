@@ -1,0 +1,5 @@
+# Dataset
+*.csv
+
+# OS Specific
+*.DS_Store
