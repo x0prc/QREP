@@ -29,6 +29,9 @@ Custom Assessment Tool for Security Testing and Research
 - Docker (for deployment)
 - AWS Nitro Enclaves (optional for sensitive operations)
 
+### Dataset Reference
+[Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+
 ## Compliance Assurance Module
 
 | Regulation | Auto-Applied Technique          | Verification Method       |
