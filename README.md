@@ -30,7 +30,8 @@ Custom Assessment Tool for Security Testing and Research
 - AWS Nitro Enclaves (optional for sensitive operations)
 
 ### Dataset Reference
-[Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud)
+[Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) <br> <br>
+⚠️ Make sure to place the `transactions.csv` file in the `/data/financial_transactions/` directory before executing.
 
 ## Compliance Assurance Module
 
