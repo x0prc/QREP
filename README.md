@@ -29,6 +29,25 @@ Custom Assessment Tool for Security Testing and Research
 - Docker (for deployment)
 - AWS Nitro Enclaves (optional for sensitive operations)
 
+### Create and activate virtual environment
+`python -m venv venv`
+`source venv/bin/activate`  # Linux/macOS
+`venv\Scripts\activate`  # Windows
+
+### Dependencies
+`pip install -r requirements.txt`
+
+### Capture Biometric Data
+`python -m src.tokenization.biometric_capture`
+
+### GAN Training
+`chmod +x scripts/train_gan.sh`
+`./scripts/train_gan.sh`
+
+### Deployment
+`./scripts/deploy.sh`
+
+
 ### Dataset Reference
 [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) <br> <br>
 ⚠️ Make sure to place the `transactions.csv` file in the `/data/financial_transactions/` directory before executing.
