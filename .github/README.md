@@ -54,6 +54,7 @@ Custom Assessment Tool for Security Testing and Research
 ### Dataset Reference
 [Kaggle Credit Card Fraud Detection](https://www.kaggle.com/datasets/mlg-ulb/creditcardfraud) <br> <br>
 ⚠️ Make sure to place the `transactions.csv` file in the `/data/financial_transactions/` directory before executing.
+⚠️ You need to have an Nvidia GPU with CUDA installed.
 
 ---
 
