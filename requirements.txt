@@ -1,26 +1,26 @@
 # Core dependencies
-cryptography==42.0.7
-pqcrypto==0.1.3
-pynput==1.7.6
+cryptography
+pqcrypto
+pynput
 
 # Machine Learning
 torch
-torchvision==0.16.0
-transformers==4.38.2
+torchvision
+transformers
 stylegan2_pytorch
 
 # Data processing
-numpy==1.26.0
-pandas==2.1.3
-scikit-learn==1.3.2
-Pillow==10.1.0
+numpy
+pandas
+scikit-learn
+Pillow
 
 # Federated Learning
 syft
 
 # Utilities
-tqdm==4.66.1
-requests==2.31.0
+tqdm
+requests
 
 # Testing
-pytest==8.0.2
+pytest
