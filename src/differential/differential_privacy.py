@@ -8,6 +8,20 @@ class ContextAwareDP:
         self.tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
         self.model = AutoModelForSequenceClassification.from_pretrained("bert-base-cased", num_labels=10)
 
+    def calculate_privacy_budget(self, context_score, diversity_metric):
+        return self.calculate_epsilon(context_score, diversity_metric)
+
+    def add_laplace_noise(self, data, sensitivity, epsilon):
+        return self.add_noise(data, sensitivity=sensitivity, epsilon=epsilon)
+
+    def apply_differential_privacy(self, financial_data, epsilon=0.1):
+        return self.add_noise(financial_data, epsilon=epsilon)
+
+    def process_data(self, text_data, diversity_metric):
+        context_score = self.analyze_text(text_data)
+        adjusted_epsilon = self.calculate_epsilon(context_score, diversity_metric)
+        return {"adjusted_epsilon": adjusted_epsilon}
+
     def calculate_epsilon(self, context_score, diversity):
         """Calculate adaptive privacy budget"""
         return (self.epsilon_base * (1 + context_score/10)**-1) + (diversity/5)
