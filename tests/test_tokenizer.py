@@ -9,43 +9,44 @@ Tests include:
 import pytest
 from src.tokenization.quantum_tokenizer import QuantumTokenizer
 
-@pytest.fixture
-def tokenizer():
-    """Fixture to initialize a QuantumTokenizer instance."""
-    return QuantumTokenizer(key_rotation_interval=10)
+def test_biometric_pattern_update():
+    tokenizer = QuantumTokenizer()
+    biometric_data = [128, 45, 92, 187]
+    tokenizer.update_biometric_pattern(biometric_data)
+    assert len(tokenizer.behavioral_pattern) == 32  # BLAKE2s digest size
+    tokenizer.update_biometric_pattern(biometric_data, mouse_trajectory=[10, 20])
+    assert len(tokenizer.behavioral_pattern) == 32
 
-def test_token_generation_and_verification(tokenizer):
-    """Test that tokens are generated and verified correctly."""
-    data = b"test_data"
-    token = tokenizer.quantum_hash(data)
-    assert tokenizer.verify_token(token, data), "Token verification failed."
 
-def test_key_rotation(tokenizer):
-    """Test that keys are rotated after the specified interval."""
-    import time
+def test_generate_and_verify_token():
+    tokenizer = QuantumTokenizer()
+    biometric_data = capture_keystroke_dynamics()
+    tokenizer.update_biometric_pattern(biometric_data)
 
-    data = b"test_data"
-    token1 = tokenizer.quantum_hash(data)
+    data = b"Test data for token"
+    token = tokenizer.generate_token(data)
+    assert isinstance(token, bytes)
+    assert tokenizer.verify_token(token, data) is True
 
-    time.sleep(11)
+    assert tokenizer.verify_token(token, b"Different data") is False
 
-    token2 = tokenizer.quantum_hash(data)
+    tokenizer.update_biometric_pattern([1, 2, 3])
+    assert tokenizer.verify_token(token, data) is False
 
-    assert not tokenizer.verify_token(token1, data), "Old token should not be valid after key rotation."
 
-    assert tokenizer.verify_token(token2, data), "New token verification failed."
+def test_key_rotation():
+    tokenizer = QuantumTokenizer(key_rotation_interval=0)  # Force immediate rotation
+    biometric_data = capture_keystroke_dynamics()
+    tokenizer.update_biometric_pattern(biometric_data)
 
-def test_biometric_pattern_update(tokenizer):
-    """Test that biometric patterns are updated correctly."""
-    keystroke_timings = [0.1, 0.2, 0.3]
-    mouse_trajectory = [(100, 200, 0.1), (150, 250, 0.2)]
+    data = b"Rotate test"
+    token = tokenizer.generate_token(data)
+    assert tokenizer.verify_token(token, data) is True
 
-    tokenizer.update_biometric_pattern(keystroke_timings, mouse_trajectory)
+    tokenizer._rotate_keys_if_needed()
 
-    data = b"test_data"
-    token = tokenizer.quantum_hash(data)
+    assert tokenizer.verify_token(token, data) is False
 
-    assert tokenizer.verify_token(token, data), "Token verification failed with updated biometric pattern."
 
 if __name__ == "__main__":
     pytest.main()
