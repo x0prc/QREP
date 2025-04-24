@@ -27,25 +27,28 @@ def temp_dirs():
 def test_save_and_load_checkpoint(temp_dirs):
     models_dir, _ = temp_dirs
     manager = GANManager(models_dir=models_dir)
-    class DummyTrainer:
-        class DummyGAN:
-            class DummyGANInner:
-                def state_dict(self): return {"weights": [1,2,3]}
-                def optimizer(self): return type("Opt", (), {"state_dict": lambda self: {"lr": 0.001}})()
-            GAN = DummyGANInner()
-            losses = {"g": 0.1, "d": 0.2}
-        GAN = DummyGAN()
-    trainer = DummyTrainer()
+
+    model_state = {"weights": [1, 2, 3]}
+    optimizer_state = {"lr": 0.001}
     config = {"batch_size": 8}
-    version = manager.save_checkpoint(trainer, epoch=1, config=config)
+
+    version = manager.save_checkpoint(
+        model_state=model_state,
+        optimizer_state=optimizer_state,
+        epoch=1,
+        config=config
+    )
+
+    # Verify files were created
     assert os.path.exists(os.path.join(models_dir, f"v{version}", "generator.pth"))
     assert os.path.exists(os.path.join(models_dir, f"v{version}", "training_state.pth"))
     assert os.path.exists(os.path.join(models_dir, f"v{version}", "config.json"))
+
     # Test loading
     checkpoint = manager.load_checkpoint(version)
-    assert "generator" in checkpoint
-    assert "training_state" in checkpoint
-    assert "config" in checkpoint
+    assert checkpoint["generator"] == model_state
+    assert checkpoint["training_state"]["optimizer_state"] == optimizer_state
+    assert checkpoint["config"] == config
 
 def test_save_sample_images_and_metadata(temp_dirs):
     _, results_dir = temp_dirs
