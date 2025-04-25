@@ -36,12 +36,18 @@ def test_apply_differential_privacy(dp):
     assert noisy.shape == data.shape
 
 def test_process_data_high_risk(dp, monkeypatch):
+    dp = ContextAwareDP()
     # Patch model to always return high context score
-    class DummyOutput:
-        logits = torch.tensor([[0,0,0,0,0,0,0,0,0,10]])
-    dp.model = lambda **kwargs: DummyOutput()
+    class MockModel:
+            def __call__(self, **kwargs):
+                class Output:
+                    logits = torch.tensor([[0,0,0,0,0,0,0,10,0,0]])
+                return Output()
+
+    dp.model = MockModel()
     dp.tokenizer = lambda text, return_tensors: {}
-    result = dp.process_data("suspicious transaction", diversity_metric=2.0)
+
+    result = dp.process_data("suspicious transaction", diversity_metric=4.2)
     assert "synthetic_data" in result
     assert "adjusted_epsilon" in result
 
