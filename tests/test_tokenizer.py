@@ -7,6 +7,7 @@ Tests include:
 """
 
 import pytest
+import time
 from src.tokenization.quantum_tokenizer import QuantumTokenizer
 
 def test_biometric_pattern_update():
@@ -16,6 +17,10 @@ def test_biometric_pattern_update():
     assert len(tokenizer.behavioral_pattern) == 32  # BLAKE2s digest size
     tokenizer.update_biometric_pattern(biometric_data, mouse_trajectory=[10, 20])
     assert len(tokenizer.behavioral_pattern) == 32
+
+
+def capture_keystroke_dynamics():
+    return[128, 45, 92, 187]
 
 
 def test_generate_and_verify_token():
@@ -35,14 +40,16 @@ def test_generate_and_verify_token():
 
 
 def test_key_rotation():
-    tokenizer = QuantumTokenizer(key_rotation_interval=0)  # Force immediate rotation
-    biometric_data = capture_keystroke_dynamics()
+    tokenizer = QuantumTokenizer(key_rotation_interval=3600)  # Force immediate rotation
+
+    biometric_data = [128, 45, 92, 187]
     tokenizer.update_biometric_pattern(biometric_data)
 
     data = b"Rotate test"
     token = tokenizer.generate_token(data)
     assert tokenizer.verify_token(token, data) is True
 
+    time.sleep(2)
     tokenizer._rotate_keys_if_needed()
 
     assert tokenizer.verify_token(token, data) is False
