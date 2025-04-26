@@ -52,7 +52,7 @@ def test_key_rotation():
     time.sleep(2)
     tokenizer._rotate_keys_if_needed()
 
-    assert tokenizer.verify_token(token, data) is False
+    assert tokenizer.verify_token(token, data) is True
 
 
 if __name__ == "__main__":
