@@ -1,6 +1,9 @@
 ## Quantum Resistant Engine for Privacy
 Custom Assessment Tool for Security Testing and Research
 
+---
+## ⚠️ Under Development with 8/10 Tests Passing.
+
 ## Features
 1. **Quantum-Sealed Tokenization**: Combines lattice-based cryptography with behavioral biometric hashing for robust data preprocessing.
 2. **Context-Aware Differential Privacy**: Dynamically adjusts privacy budgets based on data sensitivity using AI-driven analysis.
