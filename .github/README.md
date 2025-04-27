@@ -1,8 +1,7 @@
 ## Quantum Resistant Engine for Privacy
 Custom Assessment Tool for Security Testing and Research
 
----
-## ⚠️ Under Development with [![Run Tests](https://github.com/x0prc/QREP/actions/workflows/main.yml/badge.svg)](https://github.com/x0prc/QREP/actions/workflows/main.yml)
+[![Run Tests](https://github.com/x0prc/QREP/actions/workflows/main.yml/badge.svg)](https://github.com/x0prc/QREP/actions/workflows/main.yml)
 
 ## Features
 1. **Quantum-Sealed Tokenization**: Combines lattice-based cryptography with behavioral biometric hashing for robust data preprocessing.
